@@ -11,6 +11,7 @@ import UIKit
 class FavoriteViewCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let image = UIImageView()
+        image.backgroundColor = .black
         return image
     }()
     lazy var descriptionText: UITextView = {
@@ -21,7 +22,8 @@ class FavoriteViewCell: UICollectionViewCell {
     }()
     lazy var myLabel: UILabel = {
         let label = UILabel()
-        label.text = "My Label"
+        label.backgroundColor = .black
+        label.textColor = .white
         label.textAlignment = .center
         return label
     }()

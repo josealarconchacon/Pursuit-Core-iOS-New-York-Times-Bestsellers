@@ -29,7 +29,7 @@ final class APIClient {
         NetworkHelper.shared.performDataTask(endpointURLString: "https://api.nytimes.com/svc/books/v3/lists.json?api-key=\(SecretKeys.CategoriesKey)&list=\(listName)") { (appError, data) in
          
             if let appError = appError {
-                completionHandler(AppError.badURL("BadURL"),nil)
+                completionHandler(AppError.badURL("Bad URL"),nil)
             }
             if let data = data {
                 do {
@@ -37,6 +37,22 @@ final class APIClient {
                     completionHandler(appError, data.results)
                 } catch {
                     completionHandler(AppError.jsonDecodingError(error),nil)
+                }
+            }
+        }
+    }
+    static func updateBookImage(Keyword: String, completionHandler: @escaping((AppError?, [GoogleImage.ItemsWrapper]?) -> Void)) {
+        NetworkHelper.shared.performDataTask(endpointURLString: "https://www.googleapis.com/books/v1/volumes?q=isbn:\(Keyword)&key=\(SecretKeys.ImageKey)") { (appError, data) in
+            if let appError = appError {
+               completionHandler(AppError.badURL("Bad URL"), nil)
+                print(appError.errorMessage())
+            }
+            if let data = data {
+                do {
+                    let data = try JSONDecoder().decode(GoogleImage.self, from: data)
+                    completionHandler(appError, data.items)
+                } catch {
+                    completionHandler(AppError.jsonDecodingError(error), nil)
                 }
             }
         }

@@ -9,14 +9,16 @@
 import Foundation
 
 struct BestSellersModel: Codable {
-    struct DateResult: Codable {
+    struct DateResult: Codable{
         let rank: Int
         let weeksOnList: Int
         let bookDetails: [BookDetail]
+        
         struct BookDetail: Codable {
             let title: String
             let description: String
             let author: String
+            let primary_isbn13: String
         }
         private enum CodingKeys: String, CodingKey{
             case rank
@@ -26,3 +28,4 @@ struct BestSellersModel: Codable {
     }
     let results: [DateResult]
 }
+

@@ -19,6 +19,11 @@ class FavoritesView: UIView {
         myCV.backgroundColor = .gray
         return myCV
     }()
+//    lazy var myLabel: UILabel = {
+//        let label = UILabel()
+//        return label
+//    }()
+    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         self.myCollectionView.register(FavoriteViewCell.self, forCellWithReuseIdentifier: "FavoriteViewCell")

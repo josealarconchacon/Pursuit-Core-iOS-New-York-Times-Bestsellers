@@ -22,14 +22,14 @@ class FavoritesViewController: UIViewController {
 }
 extension FavoritesViewController:  UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return favoriteBooks.count
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteViewCell", for: indexPath) as? FavoriteViewCell else {return UICollectionViewCell()}
-        let book = favoriteBooks[indexPath.row]
-        cell.myLabel.text = book.bookName
-        cell.descriptionText.text = book.description
+//        let book = favoriteBooks[indexPath.row]
+//        cell.myLabel.text = book.bookName
+//        cell.descriptionText.text = book.description
         return cell
     }
 }

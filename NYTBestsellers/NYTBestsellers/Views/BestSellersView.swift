@@ -10,7 +10,6 @@ import UIKit
 
 class BestSellersView: UIView {
     let names = DataPersistence.getNames()
-
     var bestSelletShow = [BestSellersModel.DateResult]() {
         didSet {
             DispatchQueue.main.async {

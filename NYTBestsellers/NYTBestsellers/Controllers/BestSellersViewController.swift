@@ -17,10 +17,10 @@ class BestSellersViewController: UIViewController{
             }
         }
     }
+
     var categoryList = CategoryList.self
     var categoryList2 = [CategoryModel].self
     var listNames = [String]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,7 +30,32 @@ class BestSellersViewController: UIViewController{
         bestSellerBookViewController.collectionView.delegate = self
         bestSellerBookViewController.pickerView.delegate = self
         bestSellerBookViewController.pickerView.dataSource = self
-        
+        updateListName()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        if let names = UserDefaults.standard.object(forKey: "Name") as? String{
+            APIClient.getBook(listName: names) { (appError , bookData) in
+                if let appError = appError {
+                    print(appError)
+                }
+                if let bookData = bookData {
+                    self.book = bookData
+                    print(self.book.count)
+                }
+            }
+        } else {
+            APIClient.getBook(listName: "Hardcover-Fiction") { (appError , bookData) in
+                if let appError = appError {
+                    print(appError)
+                }
+                if let bookData = bookData {
+                    self.book = bookData
+                    print(self.book.count)
+                }
+            }
+        }
+    }
+    func updateListName() {
         APIClient.getCategory { (error, category) in
             if let error = error {
                 print(error)
@@ -42,10 +67,8 @@ class BestSellersViewController: UIViewController{
                     }
                 }
                 print(self.listNames)
-                
             }
         }
-
         APIClient.getBook(listName: "Hardcover-Fiction") { (appError , bookData) in
             if let appError = appError {
                 print(appError)
@@ -53,11 +76,11 @@ class BestSellersViewController: UIViewController{
             if let bookData = bookData {
                 self.book = bookData
                 print(self.book.count)
-        
             }
         }
     }
 }
+
 extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDataSource,UIPickerViewDelegate, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return book.count
@@ -65,8 +88,27 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BestSellersCell", for: indexPath) as? BestSellersCell else {return UICollectionViewCell()}
         let bookkToSelected = book[indexPath.row]
-        cell.bookLabel.text = "\(bookkToSelected.weeksOnList)on best seller week list"
+        cell.bookLabel.text = "\(bookkToSelected.weeksOnList) week on best seller list"
         cell.bookDescription.text = bookkToSelected.bookDetails[0].description
+        
+        APIClient.updateBookImage(Keyword: bookkToSelected.bookDetails[0].primary_isbn13) { (appError, data) in
+            if let appError = appError {
+                print(appError)
+            }
+            if let data = data {
+                ImageHelper.fetchImageFromNetwork(urlString: data[0].volumeInfo.imageLinks.smallThumbnail.absoluteString, completion: { (appError, image) in
+                    if let appError = appError {
+                        print(appError)
+                    }
+                    if let image = image {
+                        DispatchQueue.main.async {
+                            cell.imageView.image = image
+                            print(image)
+                        }
+                    }
+                })
+            }
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -15,8 +15,8 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setViewControllers([mainViewController, secondViewController, lastViewController], animated: true)
-        mainViewController.tabBarItem = UITabBarItem(title: "Best Sellers", image: nil, tag: 0)
-        secondViewController.tabBarItem = UITabBarItem(title: "Favorites", image: nil, tag: 0)
-        lastViewController.tabBarItem = UITabBarItem(title: "Settings", image: nil, tag: 0)
+        mainViewController.tabBarItem = UITabBarItem(title: "Best Sellers", image: UIImage(named: "icons8-best_seller"), tag: 0)
+        secondViewController.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(named: "icons8-likes_folder_filled"), tag: 0)
+        lastViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "icons8-settings"), tag: 0)
     }
 }

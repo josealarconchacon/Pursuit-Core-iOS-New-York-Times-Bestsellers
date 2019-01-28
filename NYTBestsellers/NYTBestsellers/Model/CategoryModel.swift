@@ -45,19 +45,9 @@ import Foundation
 
 
 struct CategoryModel: Codable {
-//    let num_results: Int
-//    struct ResultData: Codable{
-        var list_name: String
-//    enum key: String, CodingKey{
-//        case listName = "list_name"
-//        }
-//    }
+    var list_name: String
 }
 
 struct CategoryList: Codable {
     var results: [CategoryModel]
-//    private enum keys: String, CodingKey{
-//        case numResult = "num_results"
-//        case results
-//    }
 }
