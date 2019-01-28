@@ -11,10 +11,9 @@ import UIKit
 class BestSellersDetailViewController: UIViewController {
     var detailInfo = BestSellersDetailView()
    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(detailInfo)
-    }
-    init(label: String, description: String) {
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 struct FavoriteBook: Codable {
-    let bookName: String
+    var bookName: String
     let favoritedAt: String
     let imageData: Data
     let description: String

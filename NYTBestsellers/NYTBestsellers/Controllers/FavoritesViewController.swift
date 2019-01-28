@@ -9,30 +9,27 @@
 import UIKit
 
 class FavoritesViewController: UIViewController {
-    var books = DataPersistence.getBook()
+    var favoriteBooks = DataPersistence.getBook()
     let favorite = FavoritesView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(favorite)
-        books = DataPersistence.getBook()
+        favoriteBooks = DataPersistence.getBook()
         favorite.myCollectionView.dataSource = self
     }
 }
 extension FavoritesViewController:  UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return favoriteBooks.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteViewCell", for: indexPath) as? FavoriteViewCell else {return UICollectionViewCell()}
-//        let bookInfo = books[indexPath.row]
-//        cell.myLabel.text = bookInfo.bookName
-//        cell.descriptionText.text = bookInfo.description
-//        if let image = UIImage(data: bookInfo.imageData) {
-//            cell.imageView.image = image
-//        }
+        let book = favoriteBooks[indexPath.row]
+        cell.myLabel.text = book.bookName
+        cell.descriptionText.text = book.description
         return cell
     }
 }

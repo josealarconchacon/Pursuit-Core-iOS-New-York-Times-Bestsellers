@@ -25,18 +25,12 @@ class FavoriteViewCell: UICollectionViewCell {
         label.textAlignment = .center
         return label
     }()
-    lazy var buttonPress: UIButton = {
-        var button = UIButton()
-        button.setTitle("Button", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
-        return button
-    }()
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         self.backgroundColor = .white
         addSubview(imageView)
         addSubview(myLabel)
-        addSubview(buttonPress)
+        //addSubview(buttonPress)
         addSubview(descriptionText)
         setImage()
         setLabel()
@@ -65,13 +59,7 @@ class FavoriteViewCell: UICollectionViewCell {
         myLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
         myLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
     }
-    func setButtonPress() {
-        buttonPress.translatesAutoresizingMaskIntoConstraints = false
-        buttonPress.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10).isActive = true
-        buttonPress.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
-        buttonPress.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
 
-    }
 }
 
 

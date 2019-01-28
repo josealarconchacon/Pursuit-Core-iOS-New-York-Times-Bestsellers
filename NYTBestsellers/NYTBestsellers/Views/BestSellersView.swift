@@ -30,7 +30,7 @@ class BestSellersView: UIView {
     }()
     lazy var pickerView: UIPickerView = {
         let picker = UIPickerView()
-        picker.backgroundColor = .yellow
+        picker.backgroundColor = .white
         return picker
     }()
     override init(frame: CGRect) {
@@ -60,15 +60,15 @@ class BestSellersView: UIView {
     func setCollectionViewConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 11).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -11).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
         collectionView.heightAnchor.constraint(equalTo: heightAnchor, constant: -600).isActive = true
     }
     func setPickerViewConstraints() {
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         pickerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 325).isActive = true
-        pickerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        pickerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        pickerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        pickerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
         pickerView.heightAnchor.constraint(equalTo: heightAnchor, constant: -500).isActive = true
     }
 }

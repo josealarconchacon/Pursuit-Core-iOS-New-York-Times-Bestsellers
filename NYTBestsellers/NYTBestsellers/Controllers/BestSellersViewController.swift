@@ -17,6 +17,10 @@ class BestSellersViewController: UIViewController{
             }
         }
     }
+    var categoryList = CategoryList.self
+    var categoryList2 = [CategoryModel].self
+    var listNames = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,13 +31,18 @@ class BestSellersViewController: UIViewController{
         bestSellerBookViewController.pickerView.delegate = self
         bestSellerBookViewController.pickerView.dataSource = self
         
-        APIClient.getCategory { (error, caregoty) in
+        APIClient.getCategory { (error, category) in
             if let error = error {
                 print(error)
             }
-            if let caregoty = caregoty {
-                print(error)
-                print(caregoty)
+            if let category = category {
+                if self.listNames.count == 0 {
+                    for result in category.results {
+                        self.listNames.append(result.list_name)
+                    }
+                }
+                print(self.listNames)
+                
             }
         }
 
@@ -56,7 +65,7 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BestSellersCell", for: indexPath) as? BestSellersCell else {return UICollectionViewCell()}
         let bookkToSelected = book[indexPath.row]
-        cell.bookLabel.text = "\(bookkToSelected.weeksOnList)"
+        cell.bookLabel.text = "\(bookkToSelected.weeksOnList)on best seller week list"
         cell.bookDescription.text = bookkToSelected.bookDetails[0].description
         return cell
     }
@@ -65,7 +74,7 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
         navigationController?.pushViewController(detail, animated: true)
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let nameToSelected = bestSellerBookViewController.names[row].list_name
+        let nameToSelected = listNames[row]
         APIClient.getBook(listName: nameToSelected) { (error, data) in
             if let error = error {
                 print(error)
@@ -75,6 +84,7 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
             }
         }
     }
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return bestSellerBookViewController.names.count
     }
@@ -82,7 +92,7 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
         return 1
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return bestSellerBookViewController.names[0].list_name
+        return bestSellerBookViewController.names[row].list_name
     }
 }
 

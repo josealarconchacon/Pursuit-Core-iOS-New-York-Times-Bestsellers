@@ -27,15 +27,22 @@ class BestSellersDetailView: UIView {
         textView.backgroundColor = .black
         return textView
     }()
+    lazy var buttonInfo: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        return button
+    }()
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         self.addSubview(detailImage)
         self.addSubview(detailTextView)
         self.addSubview(myLabel)
+        self.addSubview(buttonInfo)
         backgroundColor = .white
         imageConstraints()
-        setLabel()
+        setLabelConstraints()
         textViewConstraints()
+        setButtonConstraints()
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -47,7 +54,7 @@ class BestSellersDetailView: UIView {
         detailImage.heightAnchor.constraint(equalToConstant: 300).isActive = true
         detailImage.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
-    func setLabel() {
+    func setLabelConstraints() {
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 320).isActive = true
         myLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
@@ -56,9 +63,15 @@ class BestSellersDetailView: UIView {
     }
     func textViewConstraints() {
         detailTextView.translatesAutoresizingMaskIntoConstraints = false
+        detailTextView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 350).isActive = true
         detailTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
         detailTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         detailTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
         detailTextView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4).isActive = true
+    }
+    func setButtonConstraints() {
+        buttonInfo.translatesAutoresizingMaskIntoConstraints = false
+        buttonInfo.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        buttonInfo.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
     }
 }

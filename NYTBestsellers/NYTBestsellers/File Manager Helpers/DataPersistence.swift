@@ -11,9 +11,9 @@ struct DataPersistence {
     public static let filename = "Name.plist"
     public static let fileName = "Book.plist"
     private static var favoriteBooks = [FavoriteBook]()
-    private static var nanes = [BookModel.ResultData]()
+    private static var nanes = [CategoryModel]()
     
-    static func getSaved(data: [BookModel.ResultData]) {
+    static func getSaved(data: [CategoryModel]) {
         let path = DataPersistenceManager.filepathToDocumentsDirectory(filename: filename)
             do {
                 let data = try PropertyListEncoder().encode(data)
@@ -22,12 +22,12 @@ struct DataPersistence {
                 print("property list encoding error : \(error)")
         }
     }
-    static func getNames() -> [BookModel.ResultData]{
+    static func getNames() -> [CategoryModel]{
         let path = DataPersistenceManager.filepathToDocumentsDirectory(filename: filename).path
         if FileManager.default.fileExists(atPath: path){
             if let data = FileManager.default.contents(atPath: path){
                 do {
-                    nanes = try PropertyListDecoder().decode([BookModel.ResultData].self, from: data)
+                    nanes = try PropertyListDecoder().decode([CategoryModel].self, from: data)
                 } catch {
                     print("decoding: \(error)")
                 }

@@ -12,27 +12,24 @@ class BestSellersCell: UICollectionViewCell {
 
     lazy var imageView: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .white
+        image.backgroundColor = .red
         return image
     }()
     lazy var bookLabel: UILabel = {
         let label = UILabel()
-        label.text = "Booeeeeeeeeeeeeek"
-        label.textColor = .white
+        label.textColor = .black
         label.textAlignment = .center
-        label.textAlignment = .center
-        label.backgroundColor = .black
         return label
     }()
     lazy var bookDescription: UITextView = {
         let description = UITextView()
-        description.backgroundColor = .black
-        description.textColor = .white
+        description.textColor = .black
+        description.textAlignment = .center
         return description
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .red
+//        self.backgroundColor = .red
         addSubview(imageView)
         addSubview(bookLabel)
         addSubview(bookDescription)
