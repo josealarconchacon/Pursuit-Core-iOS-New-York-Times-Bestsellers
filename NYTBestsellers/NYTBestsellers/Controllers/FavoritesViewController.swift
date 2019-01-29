@@ -18,6 +18,15 @@ class FavoritesViewController: UIViewController {
         view.addSubview(favorite)
         favoriteBooks = DataPersistence.getBook()
         favorite.myCollectionView.dataSource = self
+        favorite.myCollectionView.reloadData()
+    }
+    @objc func setButton(sender: UIButton) {
+        let index = sender.tag
+        let action = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let delete = UIAlertAction(title: "Delete", style: .default) { (UIAlertAction) in
+            DataPersistence.deleteBook(index: index)
+            self.favorite.myCollectionView.reloadData()
+        }
     }
 }
 extension FavoritesViewController:  UICollectionViewDataSource {
@@ -27,10 +36,7 @@ extension FavoritesViewController:  UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteViewCell", for: indexPath) as? FavoriteViewCell else {return UICollectionViewCell()}
-//        let book = favoriteBooks[indexPath.row]
-//        cell.myLabel.text = book.bookName
-//        cell.descriptionText.text = book.description
+       // let addToFavorite = favoriteBooks[indexPath.row]
         return cell
     }
 }
-

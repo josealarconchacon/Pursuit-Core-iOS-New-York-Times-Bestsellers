@@ -39,14 +39,6 @@ struct DataPersistence {
             }
             return nanes
         }
-    static func saveBook(book: FavoriteBook) {
-        favoriteBooks.append(book)
-        saveToFavorites()
-    }
-    static func deleteBook(index: Int) {
-        favoriteBooks.remove(at: index)
-        saveToFavorites()
-    }
     static func getBook() -> [FavoriteBook] {
          let path = DataPersistenceManager.filepathToDocumentsDirectory(filename: fileName).path
         if FileManager.default.fileExists(atPath: path) {
@@ -72,6 +64,14 @@ struct DataPersistence {
         } catch {
             print("Encoding error is: \(error)")
         }
+    }
+    static func saveBook(book: FavoriteBook) {
+        favoriteBooks.append(book)
+        saveToFavorites()
+    }
+    static func deleteBook(index: Int) {
+        favoriteBooks.remove(at: index)
+        saveToFavorites()
     }
 }
 

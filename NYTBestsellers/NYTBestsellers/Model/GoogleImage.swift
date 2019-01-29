@@ -29,6 +29,7 @@ struct GoogleImage: Codable{
     }
     struct ImageData: Codable {
         let smallThumbnail: URL
+        let thumbnail: URL
     }
 }
 

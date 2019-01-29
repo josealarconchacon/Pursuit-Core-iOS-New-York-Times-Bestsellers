@@ -29,7 +29,6 @@ class BestSellersCell: UICollectionViewCell {
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.backgroundColor = .red
         addSubview(imageView)
         addSubview(bookLabel)
         addSubview(bookDescription)

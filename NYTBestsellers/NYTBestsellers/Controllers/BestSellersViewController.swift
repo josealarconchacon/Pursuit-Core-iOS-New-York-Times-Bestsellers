@@ -8,6 +8,9 @@
 
 import UIKit
 
+var selectedisbn = String()
+var serDescription = String()
+
 class BestSellersViewController: UIViewController{
     var bestSellerBookViewController = BestSellersView()
     var book = [BestSellersModel.DateResult]() {
@@ -79,6 +82,20 @@ class BestSellersViewController: UIViewController{
             }
         }
     }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let destination = segue.destination as? BestSellersDetailViewController
+//        let selectedCell = sender as? UICollectionViewCell
+//        let indexPath = bestSellerBookViewController.collectionView.indexPath(for: selectedCell!)
+//        let selectedBook = book[indexPath!.row]
+//        destination?.bookTitle = selectedBook.bookDetails[0].title
+//        destination?.detailInfo.myLabel.text = selectedBook.bookDetails[0].title
+//        destination?.detailInfo.detailTextView.text = selectedBook.bookDetails[0].description
+////        destination?.detailInfo.detailImage.image = UIImage(named: selectedBook.bookDetails[0].primary_isbn13)
+////        destination?.bookImage = UIImage(named: selectedBook.bookDetails[0].primary_isbn13)!
+//        destination!.primaryisbn = selectedBook.bookDetails[0].primary_isbn13
+//        print("THE ISBN BEFORE THE SEGUE IS " + selectedBook.bookDetails[0].primary_isbn13 + " <----")
+//        
+//    }
 }
 
 extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDataSource,UIPickerViewDelegate, UICollectionViewDelegate {
@@ -112,7 +129,9 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detail = BestSellersDetailViewController()
+        let bookDetails = book[indexPath.row]
+        let detail = BestSellersDetailViewController(bookTitle: bookDetails.bookDetails[0].title, author: bookDetails.bookDetails[0].author, bookDescription: bookDetails.bookDetails[0].description, primary_isbn13: bookDetails.bookDetails[0].primary_isbn13)
+        selectedisbn = bookDetails.bookDetails[0].primary_isbn13
         navigationController?.pushViewController(detail, animated: true)
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
