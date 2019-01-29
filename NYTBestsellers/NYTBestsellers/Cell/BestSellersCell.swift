@@ -12,7 +12,6 @@ class BestSellersCell: UICollectionViewCell {
 
     lazy var imageView: UIImageView = {
         let image = UIImageView()
-//        image.backgroundColor = .red
         return image
     }()
     lazy var bookLabel: UILabel = {

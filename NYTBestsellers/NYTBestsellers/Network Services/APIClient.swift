@@ -11,7 +11,7 @@ final class APIClient {
     private init() {}
     static func getCategory(completionHandler: @escaping((AppError?, CategoryList?) -> Void)) {
         NetworkHelper.shared.performDataTask(endpointURLString: "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=\(SecretKeys.CategoriesKey)") { (appError, data) in
-            if let appError = appError {
+            if let _ = appError {
                 completionHandler(AppError.badURL("URL is bad"), nil)
             }
             if let data = data {
@@ -27,8 +27,7 @@ final class APIClient {
     static func getBook(listName: String,completionHandler: @escaping((AppError?, [BestSellersModel.DateResult]?) -> Void)) {
         let listName = listName.replacingOccurrences(of: " ", with: "-")
         NetworkHelper.shared.performDataTask(endpointURLString: "https://api.nytimes.com/svc/books/v3/lists.json?api-key=\(SecretKeys.CategoriesKey)&list=\(listName)") { (appError, data) in
-         
-            if let appError = appError {
+            if let _ = appError {
                 completionHandler(AppError.badURL("Bad URL"),nil)
             }
             if let data = data {

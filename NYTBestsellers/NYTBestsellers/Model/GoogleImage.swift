@@ -7,15 +7,6 @@
 //
 
 import Foundation
-//struct  GoogleImage: Codable {
-//    let items: [PhotoImage]
-//    struct GoogleData: Codable {
-//        let description: String
-//    }
-//    struct PhotoImage: Codable {
-//        let smallThumbnail: String
-//    }
-//}
 
 struct GoogleImage: Codable{
     let items: [ItemsWrapper]

@@ -8,17 +8,46 @@
 
 import UIKit
 
-class FavoritesViewController: UIViewController {
+class FavoritesViewController: UIViewController,UIActionSheetDelegate {
     var favoriteBooks = DataPersistence.getBook()
+    var savedBook = DataPersistence.saveToFavorites()
     let favorite = FavoritesView()
+    let favorites = FavoriteViewCell()
+    var bookImage = String()
     
+    override func viewWillAppear(_ animated: Bool) {
+        reload()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(favorite)
-        favoriteBooks = DataPersistence.getBook()
+        savedBook = DataPersistence.saveToFavorites()
         favorite.myCollectionView.dataSource = self
         favorite.myCollectionView.reloadData()
+        updateUI()
+        reload()
+        delete()
+    }
+    func updateUI() {
+        APIClient.updateBookImage(Keyword: selectedisbn) { (appError, data) in
+            if let appError = appError {
+                print(appError)
+            }
+            if let data = data {
+                self.bookImage = data[0].volumeInfo.imageLinks.smallThumbnail.absoluteString
+                ImageHelper.fetchImageFromNetwork(urlString: data[0].volumeInfo.imageLinks.smallThumbnail.absoluteString, completion: { (appError, image) in
+                    if let appError = appError {
+                        print(appError)
+                    }
+                    if let image = image {
+                        DispatchQueue.main.async {
+                            self.favorites.imageView.image = image
+                        }
+                    }
+                })
+            }
+        }
     }
     @objc func setButton(sender: UIButton) {
         let index = sender.tag
@@ -26,17 +55,43 @@ class FavoritesViewController: UIViewController {
         let delete = UIAlertAction(title: "Delete", style: .default) { (UIAlertAction) in
             DataPersistence.deleteBook(index: index)
             self.favorite.myCollectionView.reloadData()
+            self.reload()
+            self.delete()
         }
+        action.addAction(delete)
+//        let seeOnAmazon = UIAlertAction(title: "Sees on Amazon", style: .default) { (UIAlertAction) in
+//            <#code#>
+//        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        action.addAction(cancelAction)
+//        self.present(action, animated: true, completion: nil)
+        present(action, animated: true, completion: nil)
+    }
+    func reload() {
+        favoriteBooks = DataPersistence.getBook()
+        self.favorite.myCollectionView.reloadData()
+    }
+    func delete() {
+        favoriteBooks = DataPersistence.getBook()
+        self.favorite.myCollectionView.reloadData()
     }
 }
-extension FavoritesViewController:  UICollectionViewDataSource {
+extension FavoritesViewController:  UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return favoriteBooks.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteViewCell", for: indexPath) as? FavoriteViewCell else {return UICollectionViewCell()}
-       // let addToFavorite = favoriteBooks[indexPath.row]
-        return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavoriteViewCell", for: indexPath) as? FavoriteViewCell
+        let addToFavorite = favoriteBooks[indexPath.row]
+        cell?.myLabel.text = addToFavorite.bookName
+        cell?.descriptionText.text = addToFavorite.description
+        cell?.button.tag = indexPath.row
+        cell!.layer.cornerRadius = 30
+        cell!.layer.masksToBounds = true
+        cell?.button.addTarget(self, action: #selector(setButton), for: .touchUpInside)
+        if let image = UIImage(data: addToFavorite.imageData){
+            cell?.imageView.image = image
+        }
+        return cell!
     }
 }

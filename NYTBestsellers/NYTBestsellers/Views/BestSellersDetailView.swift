@@ -13,6 +13,7 @@ protocol ButtonInfoDelegate: AnyObject {
 
 class BestSellersDetailView: UIView {
     weak var delegate: ButtonInfoDelegate!
+    
     lazy var detailImage: UIImageView = {
         var image = UIImageView()
         image.backgroundColor = .red
@@ -27,7 +28,6 @@ class BestSellersDetailView: UIView {
     lazy var descriptionTextView: UITextView = {
         var textView = UITextView()
         textView.textColor = .black
-//        textView.backgroundColor = .black
         return textView
     }()
     lazy var buttonInfo: UIButton = {
@@ -65,6 +65,8 @@ class BestSellersDetailView: UIView {
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 320).isActive = true
         myLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        myLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 11).isActive = true
+        myLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -11).isActive = true
         myLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         myLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }

@@ -9,5 +9,5 @@
 import Foundation
 struct SecretKeys {
     static let CategoriesKey = "IrdmC7W9SDuGJTUrpqM5VRuQsYxiuEDC"
-    static let ImageKey = "AIzaSyA6yk_xImQXv-e8fzBEpkG7U-6LmbzOjB0"
+    static let ImageKey = "AIzaSyC6QEpe-r9iueo5wgTNUOMtkSdT_qVZpSM"
 }

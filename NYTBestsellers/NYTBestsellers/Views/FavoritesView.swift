@@ -19,7 +19,6 @@ class FavoritesView: UIView {
         myCV.backgroundColor = .gray
         return myCV
     }()
-    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         self.myCollectionView.register(FavoriteViewCell.self, forCellWithReuseIdentifier: "FavoriteViewCell")
@@ -29,7 +28,6 @@ class FavoritesView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     func setCollectionViewConstraints() {
         myCollectionView.translatesAutoresizingMaskIntoConstraints = false
         myCollectionView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true

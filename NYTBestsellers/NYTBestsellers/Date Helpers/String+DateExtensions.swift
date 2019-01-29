@@ -22,7 +22,6 @@ extension String {
     }
     return formatDate
   }
-  
   // e.g usage createdAt.date()
   public func date() -> Date {
     var date = Date()

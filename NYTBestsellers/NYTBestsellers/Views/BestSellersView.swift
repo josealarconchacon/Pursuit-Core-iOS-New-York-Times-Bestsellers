@@ -38,7 +38,6 @@ class BestSellersView: UIView {
         collectionView.register(BestSellersCell.self, forCellWithReuseIdentifier: "BestSellersCell")
         addSubview(collectionView)
         addSubview(pickerView)
-        //addSubview(pickerViewLabel)
         setCollectionViewConstraints()
         setPickerViewConstraints()
 
@@ -48,7 +47,6 @@ class BestSellersView: UIView {
             }
             if let bookData = bookData {
                 self.bestSelletShow = bookData
-//                print(bookData)
             }
         }
    }

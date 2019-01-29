@@ -7,8 +7,13 @@
 //
 
 import UIKit
+protocol FavoriteViewCellDelegate: AnyObject{
+   func detailButtonPress()
+}
 
 class FavoriteViewCell: UICollectionViewCell {
+    var delegate: FavoriteViewCellDelegate?
+    
     lazy var imageView: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .black
@@ -16,24 +21,25 @@ class FavoriteViewCell: UICollectionViewCell {
     }()
     lazy var descriptionText: UITextView = {
         let description = UITextView()
-        description.textColor = .white
-        description.backgroundColor = .black
+        description.textColor = .black
         return description
     }()
     lazy var myLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .black
-        label.textColor = .white
+        label.textColor = .black
         label.textAlignment = .center
         return label
     }()
     lazy var button: UIButton = {
         let detailBottun = UIButton()
-        detailBottun.setTitle("...", for: .normal)
-        detailBottun.titleLabel?.font = UIFont(name: "Futura", size: 50)
+        detailBottun.setImage(UIImage(named: "icons8-button2"), for: .normal)
+        detailBottun.addTarget(self, action: #selector(detailButtonPress), for: .touchUpInside)
         detailBottun.setTitleColor(.black, for: .normal)
         return detailBottun
     }()
+    @objc func detailButtonPress() {
+        delegate?.detailButtonPress()
+    }
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         self.backgroundColor = .white

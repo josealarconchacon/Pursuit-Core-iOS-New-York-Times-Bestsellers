@@ -47,7 +47,6 @@ import Foundation
 struct CategoryModel: Codable {
     var list_name: String
 }
-
 struct CategoryList: Codable {
     var results: [CategoryModel]
 }

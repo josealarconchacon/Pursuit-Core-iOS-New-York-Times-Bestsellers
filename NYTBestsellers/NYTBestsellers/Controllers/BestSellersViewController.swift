@@ -10,9 +10,11 @@ import UIKit
 
 var selectedisbn = String()
 var serDescription = String()
+var desciptionFromGoogle = String()
 
 class BestSellersViewController: UIViewController{
     var bestSellerBookViewController = BestSellersView()
+    var placeHolder = UIImage()
     var book = [BestSellersModel.DateResult]() {
         didSet {
             DispatchQueue.main.async {
@@ -24,15 +26,16 @@ class BestSellersViewController: UIViewController{
     var categoryList = CategoryList.self
     var categoryList2 = [CategoryModel].self
     var listNames = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.view.backgroundColor = .white
         view.addSubview(bestSellerBookViewController)
         bestSellerBookViewController.collectionView.dataSource = self
         bestSellerBookViewController.collectionView.delegate = self
         bestSellerBookViewController.pickerView.delegate = self
         bestSellerBookViewController.pickerView.dataSource = self
+        bestSellerBookViewController.collectionView.reloadData()
         updateListName()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -82,20 +85,6 @@ class BestSellersViewController: UIViewController{
             }
         }
     }
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let destination = segue.destination as? BestSellersDetailViewController
-//        let selectedCell = sender as? UICollectionViewCell
-//        let indexPath = bestSellerBookViewController.collectionView.indexPath(for: selectedCell!)
-//        let selectedBook = book[indexPath!.row]
-//        destination?.bookTitle = selectedBook.bookDetails[0].title
-//        destination?.detailInfo.myLabel.text = selectedBook.bookDetails[0].title
-//        destination?.detailInfo.detailTextView.text = selectedBook.bookDetails[0].description
-////        destination?.detailInfo.detailImage.image = UIImage(named: selectedBook.bookDetails[0].primary_isbn13)
-////        destination?.bookImage = UIImage(named: selectedBook.bookDetails[0].primary_isbn13)!
-//        destination!.primaryisbn = selectedBook.bookDetails[0].primary_isbn13
-//        print("THE ISBN BEFORE THE SEGUE IS " + selectedBook.bookDetails[0].primary_isbn13 + " <----")
-//        
-//    }
 }
 
 extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDataSource,UIPickerViewDelegate, UICollectionViewDelegate {
@@ -113,6 +102,8 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
                 print(appError)
             }
             if let data = data {
+                desciptionFromGoogle = data[0].volumeInfo.description
+
                 ImageHelper.fetchImageFromNetwork(urlString: data[0].volumeInfo.imageLinks.smallThumbnail.absoluteString, completion: { (appError, image) in
                     if let appError = appError {
                         print(appError)
@@ -132,6 +123,7 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
         let bookDetails = book[indexPath.row]
         let detail = BestSellersDetailViewController(bookTitle: bookDetails.bookDetails[0].title, author: bookDetails.bookDetails[0].author, bookDescription: bookDetails.bookDetails[0].description, primary_isbn13: bookDetails.bookDetails[0].primary_isbn13)
         selectedisbn = bookDetails.bookDetails[0].primary_isbn13
+        detail.bookDescriptionFromGoogle = desciptionFromGoogle
         navigationController?.pushViewController(detail, animated: true)
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -145,7 +137,6 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
             }
         }
     }
-    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return bestSellerBookViewController.names.count
     }
