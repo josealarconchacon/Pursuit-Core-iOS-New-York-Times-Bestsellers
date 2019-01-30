@@ -13,6 +13,7 @@ struct BestSellersModel: Codable {
         let rank: Int
         let weeksOnList: Int
         let bookDetails: [BookDetail]
+        let amazonProductUrl: URL
         
     struct BookDetail: Codable {
         let title: String
@@ -24,6 +25,7 @@ struct BestSellersModel: Codable {
         case rank
         case weeksOnList = "weeks_on_list"
         case bookDetails = "book_details"
+        case amazonProductUrl = "amazon_product_url"
     }
 }
     let results: [DateResult]

@@ -59,12 +59,17 @@ class FavoritesViewController: UIViewController,UIActionSheetDelegate {
             self.delete()
         }
         action.addAction(delete)
-//        let seeOnAmazon = UIAlertAction(title: "Sees on Amazon", style: .default) { (UIAlertAction) in
-//            <#code#>
-//        }
+        action.addAction(delete)
+        let seeOnAmazon = UIAlertAction(title: "See on Amazon", style: .default) { (UIAlertAction) in
+            guard let web = URL(string: "https://www.amazon.com/Educated-Memoir-Tara-Westover/dp/0399590501?tag=NYTBS-20") else { return }
+            UIApplication.shared.open(web)
+            self.favorite.myCollectionView.reloadData()
+            self.present(action, animated: true, completion: nil)
+        }
+        action.addAction(seeOnAmazon)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         action.addAction(cancelAction)
-//        self.present(action, animated: true, completion: nil)
+        //        self.present(action, animated: true, completion: nil)
         present(action, animated: true, completion: nil)
     }
     func reload() {
@@ -95,3 +100,4 @@ extension FavoritesViewController:  UICollectionViewDataSource, UICollectionView
         return cell!
     }
 }
+

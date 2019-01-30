@@ -10,6 +10,7 @@
 import UIKit
 
 class BestSellersDetailViewController: UIViewController {
+    
     var favoriteVC = FavoritesViewController()
     var detailInfo = BestSellersDetailView()
     var book = [BestSellersModel.DateResult]()
@@ -61,7 +62,7 @@ class BestSellersDetailViewController: UIViewController {
             let timetamp = Date.getISOTimestamp()
             if let image = self.detailInfo.detailImage.image{
                 if let imageData = image.jpegData(compressionQuality: 0.5){
-                let favoriteToSet = FavoriteBook.init(bookName: self.bookTitle, favoritedAt: timetamp, imageData: imageData, description: self.bookDescription)
+                    let favoriteToSet = FavoriteBook.init(bookName: self.bookTitle, favoritedAt: timetamp, imageData: imageData, description: self.bookDescription)
                      DataPersistence.saveBook(book: favoriteToSet)
                 }
             }
