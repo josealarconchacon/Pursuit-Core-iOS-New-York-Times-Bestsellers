@@ -14,6 +14,7 @@ var desciptionFromGoogle = String()
 
 class BestSellersViewController: UIViewController{
     var bestSellerBookViewController = BestSellersView()
+    
     var placeHolder = UIImage()
     var book = [BestSellersModel.DateResult]() {
         didSet {
@@ -22,7 +23,7 @@ class BestSellersViewController: UIViewController{
             }
         }
     }
-
+   
     var categoryList = CategoryList.self
     var categoryList2 = [CategoryModel].self
     var listNames = [String]()
@@ -38,9 +39,8 @@ class BestSellersViewController: UIViewController{
         bestSellerBookViewController.collectionView.reloadData()
         updateListName()
     }
-    func showAmazonLink() {
-        
-    }
+   
+    
     override func viewWillAppear(_ animated: Bool) {
         if let names = UserDefaults.standard.object(forKey: "Name") as? String{
             APIClient.getBook(listName: names) { (appError , bookData) in
@@ -104,7 +104,7 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
         APIClient.updateBookImage(Keyword: bookkToSelected.bookDetails[0].primary_isbn13) { (appError, data) in
             if let appError = appError {
                 DispatchQueue.main.async {
-                     cell.imageView.image = UIImage(named: "icons8-book")
+                     cell.imageView.image = UIImage(named: "images")
                 }
                 
                 print(appError)

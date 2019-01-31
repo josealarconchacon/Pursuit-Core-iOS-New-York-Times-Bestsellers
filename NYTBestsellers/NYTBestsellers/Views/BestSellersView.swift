@@ -17,7 +17,7 @@ class BestSellersView: UIView {
             }
         }
     }
-    
+   
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize.init(width: 240, height: 280)

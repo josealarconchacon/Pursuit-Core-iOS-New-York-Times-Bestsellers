@@ -13,7 +13,6 @@ import SafariServices
 
 class FavoritesViewController: UIViewController,UIActionSheetDelegate, SFSafariViewControllerDelegate {
 
-    
     var favoriteBooks = DataPersistence.getBook()
     var savedBook = DataPersistence.saveToFavorites()
     let favorite = FavoritesView()

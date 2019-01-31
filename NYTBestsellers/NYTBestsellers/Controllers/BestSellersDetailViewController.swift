@@ -53,8 +53,10 @@ class BestSellersDetailViewController: UIViewController,SFSafariViewControllerDe
         
         APIClient.updateBookImage(Keyword: selectedisbn) { (appError, data) in
             if let appError = appError {
-                self.detailInfo.detailImage.image = UIImage(named: "icons8-book")
+                DispatchQueue.main.async {
+                self.detailInfo.detailImage.image = UIImage(named: "images")
                 print(appError)
+                }
             }
             if let data = data {
                 self.bookDescriptionFromGoogle = data[0].volumeInfo.description ?? ""
