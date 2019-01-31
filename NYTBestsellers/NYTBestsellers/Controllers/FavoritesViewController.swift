@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import SafariServices
 
-class FavoritesViewController: UIViewController,UIActionSheetDelegate {
+
+
+class FavoritesViewController: UIViewController,UIActionSheetDelegate, SFSafariViewControllerDelegate {
+
+    
     var favoriteBooks = DataPersistence.getBook()
     var savedBook = DataPersistence.saveToFavorites()
     let favorite = FavoritesView()
@@ -19,6 +24,7 @@ class FavoritesViewController: UIViewController,UIActionSheetDelegate {
     override func viewWillAppear(_ animated: Bool) {
         reload()
     }
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -63,9 +69,14 @@ class FavoritesViewController: UIViewController,UIActionSheetDelegate {
         action.addAction(delete)
         let seeOnAmazon = UIAlertAction(title: "See on Amazon", style: .default) { (UIAlertAction) in
             let amazonURL = self.favoriteBooks[index].amazonLink
-            UIApplication.shared.open(amazonURL)
+//            UIApplication.shared.open(amazonURL)
+            let configuration = SFSafariViewController.Configuration()
+            configuration.entersReaderIfAvailable = true
+            let fvc = SFSafariViewController(url: amazonURL, configuration: configuration)
             self.favorite.myCollectionView.reloadData()
-            self.present(action, animated: true, completion: nil)
+            
+//            self.present(action, animated: true, completion: nil)
+                    self.present(fvc, animated: true)
         }
         action.addAction(seeOnAmazon)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -99,5 +110,6 @@ extension FavoritesViewController:  UICollectionViewDataSource, UICollectionView
         }
         return cell!
     }
+    
 }
 

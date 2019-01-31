@@ -38,11 +38,13 @@ class BestSellersViewController: UIViewController{
         bestSellerBookViewController.collectionView.reloadData()
         updateListName()
     }
+    func showAmazonLink() {
+        
+    }
     override func viewWillAppear(_ animated: Bool) {
         if let names = UserDefaults.standard.object(forKey: "Name") as? String{
             APIClient.getBook(listName: names) { (appError , bookData) in
                 if let appError = appError {
-                 let _ = UIImageView(image: UIImage(named: "icons8-book"))
                     print(appError)
                 }
                 if let bookData = bookData {
@@ -53,7 +55,6 @@ class BestSellersViewController: UIViewController{
         } else {
             APIClient.getBook(listName: "Hardcover-Fiction") { (appError , bookData) in
                 if let appError = appError {
-                 let _ =  UIImageView(image: UIImage(named: "icons8-book"))
                     print(appError)
                 }
                 if let bookData = bookData {
@@ -102,6 +103,10 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
         
         APIClient.updateBookImage(Keyword: bookkToSelected.bookDetails[0].primary_isbn13) { (appError, data) in
             if let appError = appError {
+                DispatchQueue.main.async {
+                     cell.imageView.image = UIImage(named: "icons8-book")
+                }
+                
                 print(appError)
             }
             if let data = data {
@@ -126,6 +131,7 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
         let detail = BestSellersDetailViewController(bookTitle: bookDetails.bookDetails[0].title, author: bookDetails.bookDetails[0].author, bookDescription: bookDetails.bookDetails[0].description, primary_isbn13: bookDetails.bookDetails[0].primary_isbn13, amazonLink: bookDetails.amazonProductUrl)
         selectedisbn = bookDetails.bookDetails[0].primary_isbn13
         detail.bookDescriptionFromGoogle = desciptionFromGoogle
+        detail.bookTitle = bookDetails.bookDetails[0].title
         navigationController?.pushViewController(detail, animated: true)
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

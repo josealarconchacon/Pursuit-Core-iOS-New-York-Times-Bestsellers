@@ -8,14 +8,27 @@
 
 
 import UIKit
+import SafariServices
 
-class BestSellersDetailViewController: UIViewController {
+class BestSellersDetailViewController: UIViewController,SFSafariViewControllerDelegate , ButtonInfoDelegate{
+    func amazonButton() {
+        urlString = amazonLink.absoluteString
+        if let url = URL(string: urlString) {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+            let vc = SFSafariViewController.init(url: url, configuration: config)
+            self.present(vc, animated: true)
+        }
+    }
+    
+    
     
     var favoriteVC = FavoritesViewController()
     var detailInfo = BestSellersDetailView()
     var book = [BestSellersModel.DateResult]()
     var listOfBook = DataPersistence.getBook()
     var amazonLink: URL!
+    var urlString = String()
     var bookDescription = String()
     var author = String()
     var bookTitle = String()
@@ -28,9 +41,11 @@ class BestSellersDetailViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(detailInfo)
         view.backgroundColor = .black
+        detailInfo.delegate = self
         detailInfo.myLabel.text = bookTitle
         self.bookDescription = desciptionFromGoogle
         detailInfo.descriptionTextView.text = bookDescription
+        
         
         let rightBarButton = UIBarButtonItem(title: "Favorites", style: UIBarButtonItem.Style.plain, target: self, action: #selector(apdateAlert))
         print(rightBarButton)
@@ -38,6 +53,7 @@ class BestSellersDetailViewController: UIViewController {
         
         APIClient.updateBookImage(Keyword: selectedisbn) { (appError, data) in
             if let appError = appError {
+                self.detailInfo.detailImage.image = UIImage(named: "icons8-book")
                 print(appError)
             }
             if let data = data {
@@ -56,9 +72,6 @@ class BestSellersDetailViewController: UIViewController {
             }
         }
     }
-    func amazon() {
-        
-    }
     
    @objc func apdateAlert() {
         let alert = UIAlertController(title: "Book was saved to your favorite list", message: nil, preferredStyle: .alert)
@@ -71,8 +84,18 @@ class BestSellersDetailViewController: UIViewController {
                 }
             }
         }
+    detailInfo.buttonInfo.addTarget(self, action: #selector(amazon), for: .touchUpInside)
         alert.addAction(alertAction)
         present(alert, animated: true, completion: nil)
+    }
+    @objc func amazon() {
+        urlString = amazonLink.absoluteString
+        if let url = URL(string: urlString) {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+            let vc = SFSafariViewController.init(url: url, configuration: config)
+            self.present(vc, animated: true)
+        }
     }
     @objc func myRightSideBarButtonItemTapped(_ sender:UIBarButtonItem!){
         print("myRightSideBarButtonItemTapped")
