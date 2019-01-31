@@ -11,7 +11,7 @@ import UIKit
 class BestSellersCell: UICollectionViewCell {
 
     lazy var imageView: UIImageView = {
-        let image = UIImageView()
+        var image = UIImageView()
         return image
     }()
     lazy var bookLabel: UILabel = {
@@ -28,15 +28,23 @@ class BestSellersCell: UICollectionViewCell {
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
+        commonInit()
+        setUpDetailedViewConstraints()
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+        commonInit()
+    }
+    private func commonInit(){
+        setUpDetailedViewConstraints()
+    }
+    private func setUpDetailedViewConstraints() {
         addSubview(imageView)
         addSubview(bookLabel)
         addSubview(bookDescription)
         setImageConstraints()
         setNumberOfWeeksLable()
         setDescriptionConstraints()
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     func setImageConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false

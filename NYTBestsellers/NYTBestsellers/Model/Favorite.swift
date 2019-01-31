@@ -13,6 +13,7 @@ struct FavoriteBook: Codable {
     let favoritedAt: String
     let imageData: Data
     let description: String
+    let amazonLink: URL
     
     public var dateFormattedString: String {
         let isoDateFormatter = ISO8601DateFormatter()

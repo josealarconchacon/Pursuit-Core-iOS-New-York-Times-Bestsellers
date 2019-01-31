@@ -15,6 +15,7 @@ class BestSellersDetailViewController: UIViewController {
     var detailInfo = BestSellersDetailView()
     var book = [BestSellersModel.DateResult]()
     var listOfBook = DataPersistence.getBook()
+    var amazonLink: URL!
     var bookDescription = String()
     var author = String()
     var bookTitle = String()
@@ -40,7 +41,7 @@ class BestSellersDetailViewController: UIViewController {
                 print(appError)
             }
             if let data = data {
-                self.bookDescriptionFromGoogle = data[0].volumeInfo.description
+                self.bookDescriptionFromGoogle = data[0].volumeInfo.description ?? ""
                 ImageHelper.fetchImageFromNetwork(urlString: data[0].volumeInfo.imageLinks.smallThumbnail.absoluteString, completion: { (appError, image) in
                     if let appError = appError {
                         print(appError)
@@ -55,6 +56,9 @@ class BestSellersDetailViewController: UIViewController {
             }
         }
     }
+    func amazon() {
+        
+    }
     
    @objc func apdateAlert() {
         let alert = UIAlertController(title: "Book was saved to your favorite list", message: nil, preferredStyle: .alert)
@@ -62,7 +66,7 @@ class BestSellersDetailViewController: UIViewController {
             let timetamp = Date.getISOTimestamp()
             if let image = self.detailInfo.detailImage.image{
                 if let imageData = image.jpegData(compressionQuality: 0.5){
-                    let favoriteToSet = FavoriteBook.init(bookName: self.bookTitle, favoritedAt: timetamp, imageData: imageData, description: self.bookDescription)
+                    let favoriteToSet = FavoriteBook.init(bookName: self.bookTitle, favoritedAt: timetamp, imageData: imageData, description: self.bookDescription, amazonLink: self.amazonLink)
                      DataPersistence.saveBook(book: favoriteToSet)
                 }
             }
@@ -73,11 +77,13 @@ class BestSellersDetailViewController: UIViewController {
     @objc func myRightSideBarButtonItemTapped(_ sender:UIBarButtonItem!){
         print("myRightSideBarButtonItemTapped")
     }
-    init(bookTitle: String, author: String, bookDescription: String, primary_isbn13: String) {
+    init(bookTitle: String, author: String, bookDescription: String, primary_isbn13: String, amazonLink: URL) {
         super.init(nibName: nil, bundle: nil)
         self.author = author
         self.bookTitle = bookTitle
         self.primary_isbn13 = primary_isbn13
+        self.amazonLink = amazonLink
+        
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

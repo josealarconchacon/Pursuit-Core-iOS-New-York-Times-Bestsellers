@@ -15,7 +15,7 @@ struct GoogleImage: Codable{
         let volumeInfo: VolumeInfo
     }
     struct VolumeInfo: Codable {
-        let description: String
+        let description: String?
         let imageLinks: ImageData
     }
     struct ImageData: Codable {

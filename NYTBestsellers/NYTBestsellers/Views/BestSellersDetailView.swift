@@ -16,7 +16,7 @@ class BestSellersDetailView: UIView {
     
     lazy var detailImage: UIImageView = {
         var image = UIImageView()
-        image.backgroundColor = .red
+         image = UIImageView()
         return image
     }()
     lazy var myLabel: UILabel = {

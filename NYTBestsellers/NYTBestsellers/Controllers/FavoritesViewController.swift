@@ -15,6 +15,7 @@ class FavoritesViewController: UIViewController,UIActionSheetDelegate {
     let favorites = FavoriteViewCell()
     var bookImage = String()
     
+    
     override func viewWillAppear(_ animated: Bool) {
         reload()
     }
@@ -29,6 +30,7 @@ class FavoritesViewController: UIViewController,UIActionSheetDelegate {
         reload()
         delete()
     }
+    
     func updateUI() {
         APIClient.updateBookImage(Keyword: selectedisbn) { (appError, data) in
             if let appError = appError {
@@ -59,17 +61,15 @@ class FavoritesViewController: UIViewController,UIActionSheetDelegate {
             self.delete()
         }
         action.addAction(delete)
-        action.addAction(delete)
         let seeOnAmazon = UIAlertAction(title: "See on Amazon", style: .default) { (UIAlertAction) in
-            guard let web = URL(string: "https://www.amazon.com/Educated-Memoir-Tara-Westover/dp/0399590501?tag=NYTBS-20") else { return }
-            UIApplication.shared.open(web)
+            let amazonURL = self.favoriteBooks[index].amazonLink
+            UIApplication.shared.open(amazonURL)
             self.favorite.myCollectionView.reloadData()
             self.present(action, animated: true, completion: nil)
         }
         action.addAction(seeOnAmazon)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         action.addAction(cancelAction)
-        //        self.present(action, animated: true, completion: nil)
         present(action, animated: true, completion: nil)
     }
     func reload() {

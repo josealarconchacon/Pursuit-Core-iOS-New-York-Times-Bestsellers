@@ -19,7 +19,7 @@ final class APIClient {
                     let data = try JSONDecoder().decode(CategoryList.self, from: data)
                     completionHandler(appError, data)
                 } catch {
-                    completionHandler(AppError.jsonDecodingError(error),nil)
+                    completionHandler(AppError.jsonDecodingError("icons8-book" as! Error),nil)
                 }
             }
         }

@@ -42,6 +42,7 @@ class BestSellersViewController: UIViewController{
         if let names = UserDefaults.standard.object(forKey: "Name") as? String{
             APIClient.getBook(listName: names) { (appError , bookData) in
                 if let appError = appError {
+                 let _ = UIImageView(image: UIImage(named: "icons8-book"))
                     print(appError)
                 }
                 if let bookData = bookData {
@@ -52,6 +53,7 @@ class BestSellersViewController: UIViewController{
         } else {
             APIClient.getBook(listName: "Hardcover-Fiction") { (appError , bookData) in
                 if let appError = appError {
+                 let _ =  UIImageView(image: UIImage(named: "icons8-book"))
                     print(appError)
                 }
                 if let bookData = bookData {
@@ -67,6 +69,7 @@ class BestSellersViewController: UIViewController{
                 print(error)
             }
             if let category = category {
+                DataPersistence.getSaved(data: category.results)
                 if self.listNames.count == 0 {
                     for result in category.results {
                         self.listNames.append(result.list_name)
@@ -102,8 +105,7 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
                 print(appError)
             }
             if let data = data {
-                desciptionFromGoogle = data[0].volumeInfo.description
-
+                desciptionFromGoogle = data[0].volumeInfo.description ?? ""
                 ImageHelper.fetchImageFromNetwork(urlString: data[0].volumeInfo.imageLinks.smallThumbnail.absoluteString, completion: { (appError, image) in
                     if let appError = appError {
                         print(appError)
@@ -121,13 +123,13 @@ extension BestSellersViewController: UICollectionViewDataSource, UIPickerViewDat
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let bookDetails = book[indexPath.row]
-        let detail = BestSellersDetailViewController(bookTitle: bookDetails.bookDetails[0].title, author: bookDetails.bookDetails[0].author, bookDescription: bookDetails.bookDetails[0].description, primary_isbn13: bookDetails.bookDetails[0].primary_isbn13)
+        let detail = BestSellersDetailViewController(bookTitle: bookDetails.bookDetails[0].title, author: bookDetails.bookDetails[0].author, bookDescription: bookDetails.bookDetails[0].description, primary_isbn13: bookDetails.bookDetails[0].primary_isbn13, amazonLink: bookDetails.amazonProductUrl)
         selectedisbn = bookDetails.bookDetails[0].primary_isbn13
         detail.bookDescriptionFromGoogle = desciptionFromGoogle
         navigationController?.pushViewController(detail, animated: true)
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let nameToSelected = listNames[row]
+        let nameToSelected = listNames[row].description
         APIClient.getBook(listName: nameToSelected) { (error, data) in
             if let error = error {
                 print(error)

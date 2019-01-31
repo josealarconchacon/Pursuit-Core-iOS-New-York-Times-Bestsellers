@@ -21,7 +21,7 @@ class BestSellersView: UIView {
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize.init(width: 240, height: 280)
-        layout.sectionInset = UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10)
+        layout.sectionInset = UIEdgeInsets.init(top: 20, left: 10, bottom: 40, right: 10)
         layout.scrollDirection = .horizontal
         let myCV = UICollectionView.init(frame: self.bounds, collectionViewLayout: layout)
         myCV.backgroundColor = .white
@@ -56,16 +56,16 @@ class BestSellersView: UIView {
     
     func setCollectionViewConstraints() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+        collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
-        collectionView.heightAnchor.constraint(equalTo: heightAnchor, constant: -600).isActive = true
+        collectionView.heightAnchor.constraint(equalTo: heightAnchor, constant: -520).isActive = true
     }
     func setPickerViewConstraints() {
         pickerView.translatesAutoresizingMaskIntoConstraints = false
-        pickerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 325).isActive = true
-        pickerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        pickerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 300).isActive = true
+        pickerView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
         pickerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
-        pickerView.heightAnchor.constraint(equalTo: heightAnchor, constant: -500).isActive = true
+        pickerView.heightAnchor.constraint(equalTo: heightAnchor, constant: -400).isActive = true
     }
 }
