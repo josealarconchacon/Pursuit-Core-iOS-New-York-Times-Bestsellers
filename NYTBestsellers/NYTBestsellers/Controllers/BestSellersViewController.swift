@@ -30,6 +30,7 @@ class BestSellersViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Best Sellers"
         self.view.backgroundColor = .white
         view.addSubview(bestSellerBookViewController)
         bestSellerBookViewController.collectionView.dataSource = self
@@ -39,7 +40,6 @@ class BestSellersViewController: UIViewController{
         bestSellerBookViewController.collectionView.reloadData()
         updateListName()
     }
-   
     
     override func viewWillAppear(_ animated: Bool) {
         if let names = UserDefaults.standard.object(forKey: "Name") as? String{

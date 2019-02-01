@@ -12,9 +12,11 @@ class SettingsViewController: UIViewController {
     let names = DataPersistence.getNames()
     var settingVC = SettingsView()
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationItem.title = "Settings"
         view.addSubview(settingVC)
         settingVC.settingPicker.dataSource = self
         settingVC.settingPicker.delegate = self
